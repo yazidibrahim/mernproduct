@@ -10,6 +10,20 @@ app.use(express.static('public'));//!to serve static files
 
 //db
 require('./dB')//!mongoose DB connection folder is called here then server starts up
+const PRODUCT = require('./model/product');
+
+app.post('/product',async(req,res)=>{
+    try{
+        console.log(req.body)
+        let item=req.body;
+        const saveItem=PRODUCT(item)
+        await saveItem.save()
+        res.send("success")
+    }
+    catch(error){
+            res.send(error.message);
+        }
+})
 
 app.listen(PORT,()=>{
     console.log(`server listening on port ${PORT}`);
